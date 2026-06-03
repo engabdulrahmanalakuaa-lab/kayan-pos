@@ -18,18 +18,14 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      # تثبيت المكتبات مع منع بناء السورس كود والاعتماد على الجاهز
       - name: Install Dependencies
-        run: npm install --build-from-source=false
+        run: npm install
 
-      # بناء التطبيق وتوجيه الأداة لمنع تجميع الـ dependencies داخل السيرفر
       - name: Build Electron App to EXE
         run: npm run dist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          electron_config_buildDependenciesFromSource: "false"
 
-      # رفع الملف التنفيذي الناتج لتتمكن من تحميله
       - name: Upload EXE Artifact
         uses: actions/upload-artifact@v4
         with:
