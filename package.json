@@ -20,6 +20,7 @@
   "build": {
     "appId": "com.kayan.pos",
     "productName": "Kayan_Al_Bukhari_POS",
+    "npmRebuild": false,
     "win": {
       "target": [
         "nsis"
@@ -39,4 +40,3 @@
     ]
   }
 }
-
