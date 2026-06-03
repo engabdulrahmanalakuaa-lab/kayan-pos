@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -17,21 +17,15 @@ jobs:
         with:
           node-version: 20
 
-      # تثبيت المكتبات وتمرير متغيرات البيئة لـ node-gyp في نفس الخطوة
+      # خطوة حاسمة لتثبيت أدوات بناء C++ المتوافقة تماماً مع سيرفر الويندوز
+      - name: Install Windows Build Tools
+        run: |
+          npm install --global windows-build-tools --create-config
+
       - name: Install Dependencies
         run: npm install
-        env:
-          npm_config_msvs_version: "2022"
 
-      # بناء التطبيق وتمرير المتغيرات لضمان عمل إعادة البناء بنجاح
       - name: Build Electron App to EXE
         run: npm run dist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          npm_config_msvs_version: "2022"
-
-      - name: Upload EXE Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Kayan-Bukhari-POS-Installer
-          path: dist/*.exe
