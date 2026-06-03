@@ -17,23 +17,18 @@ jobs:
         with:
           node-version: 20
 
-      # خطوة إضافية لتهيئة أدوات MSBuild لمنع مشاكل node-gyp مع sqlite3
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      # إجبار npm على استخدام أدوات Visual Studio المتاحة على السيرفر
-      - name: Configure MSVS Version for node-gyp
-        run: |
-          npm config set msvs_version 2022
-          npm config set python python3
-
+      # تثبيت المكتبات وتمرير متغيرات البيئة لـ node-gyp في نفس الخطوة
       - name: Install Dependencies
         run: npm install
+        env:
+          npm_config_msvs_version: "2022"
 
+      # بناء التطبيق وتمرير المتغيرات لضمان عمل إعادة البناء بنجاح
       - name: Build Electron App to EXE
         run: npm run dist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npm_config_msvs_version: "2022"
 
       - name: Upload EXE Artifact
         uses: actions/upload-artifact@v4
