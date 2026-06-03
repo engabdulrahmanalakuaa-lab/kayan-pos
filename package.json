@@ -11,7 +11,7 @@
   "author": "Eng. Abdulrahman Al-Akwaa",
   "license": "ISC",
   "dependencies": {
-    "sqlite3": "^5.1.7"
+    "@vscode/sqlite3": "^5.1.8"
   },
   "devDependencies": {
     "electron": "^30.0.0",
@@ -20,7 +20,6 @@
   "build": {
     "appId": "com.kayan.pos",
     "productName": "Kayan_Al_Bukhari_POS",
-    "npmRebuild": false,
     "win": {
       "target": [
         "nsis"
